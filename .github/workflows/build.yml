@@ -17,9 +17,12 @@ jobs:
         with:
           node-version: '20'
           cache: 'npm'
+          cache-dependency-path: 'mi-app/package-lock.json'
 
       - name: Install dependencies
+        working-directory: ./mi-app
         run: npm ci
 
       - name: Build
+        working-directory: ./mi-app
         run: npm run build
