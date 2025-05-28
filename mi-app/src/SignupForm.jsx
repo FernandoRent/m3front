@@ -188,12 +188,12 @@ function SignupForm() {
             }}>
               Nombre
             </label>
-            <input
-              type="text"
+        <input
+          type="text"
               placeholder="Nombre completo"
-              value={form.Nombre}
-              onChange={e => setForm(f => ({ ...f, Nombre: e.target.value }))}
-              required
+          value={form.Nombre}
+          onChange={e => setForm(f => ({ ...f, Nombre: e.target.value }))}
+          required
               style={{ 
                 width: '100%',
                 padding: '0.75rem',
@@ -225,12 +225,12 @@ function SignupForm() {
             }}>
               Correo
             </label>
-            <input
-              type="email"
+        <input
+          type="email"
               placeholder="correo@ejemplo.com"
-              value={form.Correo}
-              onChange={e => setForm(f => ({ ...f, Correo: e.target.value }))}
-              required
+          value={form.Correo}
+          onChange={e => setForm(f => ({ ...f, Correo: e.target.value }))}
+          required
               style={{ 
                 width: '100%',
                 padding: '0.75rem',
@@ -262,12 +262,12 @@ function SignupForm() {
             }}>
               Contraseña
             </label>
-            <input
-              type="password"
+        <input
+          type="password"
               placeholder="Contraseña segura"
-              value={form.Contrasena}
-              onChange={e => setForm(f => ({ ...f, Contrasena: e.target.value }))}
-              required
+          value={form.Contrasena}
+          onChange={e => setForm(f => ({ ...f, Contrasena: e.target.value }))}
+          required
               style={{ 
                 width: '100%',
                 padding: '0.75rem',
@@ -338,8 +338,8 @@ function SignupForm() {
                 ➕ Registrar
               </>
             )}
-          </button>
-        </form>
+        </button>
+      </form>
 
         {mensaje && (
           <div style={{
@@ -646,12 +646,12 @@ function SignupForm() {
                 }}>
                   Nombre
                 </label>
-                <input
-                  type="text"
-                  placeholder="Nombre"
-                  value={editForm.Nombre}
-                  onChange={e => setEditForm(f => ({ ...f, Nombre: e.target.value }))}
-                  required
+            <input
+              type="text"
+              placeholder="Nombre"
+              value={editForm.Nombre}
+              onChange={e => setEditForm(f => ({ ...f, Nombre: e.target.value }))}
+              required
                   style={{ 
                     width: '100%',
                     padding: '0.75rem',
@@ -683,12 +683,12 @@ function SignupForm() {
                 }}>
                   Correo
                 </label>
-                <input
-                  type="email"
-                  placeholder="Correo"
-                  value={editForm.Correo}
-                  onChange={e => setEditForm(f => ({ ...f, Correo: e.target.value }))}
-                  required
+            <input
+              type="email"
+              placeholder="Correo"
+              value={editForm.Correo}
+              onChange={e => setEditForm(f => ({ ...f, Correo: e.target.value }))}
+              required
                   style={{ 
                     width: '100%',
                     padding: '0.75rem',
@@ -720,11 +720,11 @@ function SignupForm() {
                 }}>
                   Nueva Contraseña (opcional)
                 </label>
-                <input
-                  type="password"
-                  placeholder="Nueva contraseña (opcional)"
-                  value={editForm.Contrasena}
-                  onChange={e => setEditForm(f => ({ ...f, Contrasena: e.target.value }))}
+            <input
+              type="password"
+              placeholder="Nueva contraseña (opcional)"
+              value={editForm.Contrasena}
+              onChange={e => setEditForm(f => ({ ...f, Contrasena: e.target.value }))}
                   style={{ 
                     width: '100%',
                     padding: '0.75rem',
