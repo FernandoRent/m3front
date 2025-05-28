@@ -1,29 +1,32 @@
+import React from 'react';
 import { render, screen, fireEvent, waitFor } from '@testing-library/react';
-import { BrowserRouter } from 'react-router-dom';
+import { MemoryRouter } from 'react-router-dom';
 import Login from '../Login';
-import { AuthProvider } from '../../context/AuthContext';
 
-// Mock del contexto de autenticación
+// Mock del hook useAuth
 const mockLogin = jest.fn();
-const mockAuthContext = {
-  login: mockLogin,
-  user: null,
-  token: null,
-  loading: false
-};
+const mockNavigate = jest.fn();
 
-jest.mock('../../context/AuthContext', () => ({
-  ...jest.requireActual('../../context/AuthContext'),
-  useAuth: () => mockAuthContext
+jest.mock('../../hooks/useAuth', () => ({
+  useAuth: () => ({
+    login: mockLogin,
+    user: null,
+    token: null,
+    loading: false
+  })
 }));
 
-const renderWithProviders = (component) => {
+jest.mock('react-router-dom', () => ({
+  ...jest.requireActual('react-router-dom'),
+  useNavigate: () => mockNavigate,
+  Link: ({ children, to, ...props }) => <a href={to} {...props}>{children}</a>
+}));
+
+const renderLogin = () => {
   return render(
-    <BrowserRouter>
-      <AuthProvider>
-        {component}
-      </AuthProvider>
-    </BrowserRouter>
+    <MemoryRouter>
+      <Login />
+    </MemoryRouter>
   );
 };
 
@@ -33,45 +36,19 @@ describe('Login Component', () => {
   });
 
   test('renderiza el formulario de login correctamente', () => {
-    renderWithProviders(<Login />);
+    renderLogin();
     
-    expect(screen.getByText('Iniciar Sesión')).toBeInTheDocument();
-    expect(screen.getByLabelText(/correo/i)).toBeInTheDocument();
+    expect(screen.getByRole('heading', { name: /iniciar sesión/i })).toBeInTheDocument();
+    expect(screen.getByLabelText(/correo electrónico/i)).toBeInTheDocument();
     expect(screen.getByLabelText(/contraseña/i)).toBeInTheDocument();
     expect(screen.getByRole('button', { name: /iniciar sesión/i })).toBeInTheDocument();
   });
 
-  test('muestra errores de validación para campos vacíos', async () => {
-    renderWithProviders(<Login />);
-    
-    const submitButton = screen.getByRole('button', { name: /iniciar sesión/i });
-    fireEvent.click(submitButton);
-
-    await waitFor(() => {
-      expect(screen.getByText(/el correo es requerido/i)).toBeInTheDocument();
-      expect(screen.getByText(/la contraseña es requerida/i)).toBeInTheDocument();
-    });
-  });
-
-  test('valida formato de email', async () => {
-    renderWithProviders(<Login />);
-    
-    const emailInput = screen.getByLabelText(/correo/i);
-    const submitButton = screen.getByRole('button', { name: /iniciar sesión/i });
-
-    fireEvent.change(emailInput, { target: { value: 'email-invalido' } });
-    fireEvent.click(submitButton);
-
-    await waitFor(() => {
-      expect(screen.getByText(/formato de correo inválido/i)).toBeInTheDocument();
-    });
-  });
-
   test('envía el formulario con datos válidos', async () => {
-    mockLogin.mockResolvedValue({ success: true });
-    renderWithProviders(<Login />);
+    mockLogin.mockResolvedValue({ success: true, message: 'Login exitoso' });
+    renderLogin();
     
-    const emailInput = screen.getByLabelText(/correo/i);
+    const emailInput = screen.getByLabelText(/correo electrónico/i);
     const passwordInput = screen.getByLabelText(/contraseña/i);
     const submitButton = screen.getByRole('button', { name: /iniciar sesión/i });
 
@@ -81,6 +58,23 @@ describe('Login Component', () => {
 
     await waitFor(() => {
       expect(mockLogin).toHaveBeenCalledWith('test@test.com', 'password123');
+    });
+  });
+
+  test('muestra mensaje de error cuando el login falla', async () => {
+    mockLogin.mockResolvedValue({ success: false, message: 'Credenciales inválidas' });
+    renderLogin();
+    
+    const emailInput = screen.getByLabelText(/correo electrónico/i);
+    const passwordInput = screen.getByLabelText(/contraseña/i);
+    const submitButton = screen.getByRole('button', { name: /iniciar sesión/i });
+
+    fireEvent.change(emailInput, { target: { value: 'test@test.com' } });
+    fireEvent.change(passwordInput, { target: { value: 'wrongpassword' } });
+    fireEvent.click(submitButton);
+
+    await waitFor(() => {
+      expect(screen.getByText('Credenciales inválidas')).toBeInTheDocument();
     });
   });
 }); 

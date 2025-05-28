@@ -150,7 +150,7 @@ const Login = () => {
 
           <form onSubmit={handleSubmit} style={{ display: 'flex', flexDirection: 'column', gap: '1.5rem' }}>
             <div>
-              <label style={{
+              <label htmlFor="correo" style={{
                 display: 'block',
                 marginBottom: '0.5rem',
                 color: '#374151',
@@ -160,6 +160,7 @@ const Login = () => {
                 Correo Electrónico
               </label>
               <input
+                id="correo"
                 type="email"
                 name="correo"
                 value={formData.correo}
@@ -190,7 +191,7 @@ const Login = () => {
             </div>
 
             <div>
-              <label style={{
+              <label htmlFor="contrasena" style={{
                 display: 'block',
                 marginBottom: '0.5rem',
                 color: '#374151',
@@ -200,6 +201,7 @@ const Login = () => {
                 Contraseña
               </label>
               <input
+                id="contrasena"
                 type="password"
                 name="contrasena"
                 value={formData.contrasena}

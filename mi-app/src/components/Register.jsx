@@ -103,7 +103,7 @@ const Register = () => {
 
           <form onSubmit={handleSubmit} style={{ display: 'flex', flexDirection: 'column', gap: '1.5rem' }}>
             <div>
-              <label style={{
+              <label htmlFor="nombre" style={{
                 display: 'block',
                 marginBottom: '0.5rem',
                 color: '#374151',
@@ -113,6 +113,7 @@ const Register = () => {
                 Nombre Completo
               </label>
               <input
+                id="nombre"
                 type="text"
                 name="nombre"
                 value={formData.nombre}
@@ -143,7 +144,7 @@ const Register = () => {
             </div>
 
             <div>
-              <label style={{
+              <label htmlFor="correo-register" style={{
                 display: 'block',
                 marginBottom: '0.5rem',
                 color: '#374151',
@@ -153,6 +154,7 @@ const Register = () => {
                 Correo Electrónico
               </label>
               <input
+                id="correo-register"
                 type="email"
                 name="correo"
                 value={formData.correo}
@@ -183,7 +185,7 @@ const Register = () => {
             </div>
 
             <div>
-              <label style={{
+              <label htmlFor="contrasena-register" style={{
                 display: 'block',
                 marginBottom: '0.5rem',
                 color: '#374151',
@@ -193,6 +195,7 @@ const Register = () => {
                 Contraseña
               </label>
               <input
+                id="contrasena-register"
                 type="password"
                 name="contrasena"
                 value={formData.contrasena}
@@ -223,7 +226,7 @@ const Register = () => {
             </div>
 
             <div>
-              <label style={{
+              <label htmlFor="confirmar-contrasena" style={{
                 display: 'block',
                 marginBottom: '0.5rem',
                 color: '#374151',
@@ -233,6 +236,7 @@ const Register = () => {
                 Confirmar Contraseña
               </label>
               <input
+                id="confirmar-contrasena"
                 type="password"
                 name="confirmarContrasena"
                 value={formData.confirmarContrasena}
