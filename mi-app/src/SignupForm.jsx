@@ -1,4 +1,5 @@
-import { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
+import { API_BASE_URL } from './constants/api';
 
 function SignupForm() {
   const [usuarios, setUsuarios] = useState([]);
@@ -9,10 +10,10 @@ function SignupForm() {
   const [editForm, setEditForm] = useState({ Nombre: '', Correo: '', Contrasena: '' });
   const [modal, setModal] = useState(false);
 
-  const BACKEND_URL = 'http://localhost:3000/api/usuarios';
+  const BACKEND_URL = `${API_BASE_URL}/usuarios`;
 
   // Leer usuarios (GET)
-  const fetchUsuarios = async () => {
+  const fetchUsuarios = useCallback(async () => {
     setCargando(true);
     try {
       const res = await fetch(BACKEND_URL);
@@ -27,11 +28,11 @@ function SignupForm() {
     } finally {
       setCargando(false);
     }
-  };
+  }, [BACKEND_URL]);
 
   useEffect(() => {
     fetchUsuarios();
-  }, []);
+  }, [fetchUsuarios]);
 
   // Crear usuario (POST)
   const handleSubmit = async (e) => {

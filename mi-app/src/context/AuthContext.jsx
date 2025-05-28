@@ -1,14 +1,7 @@
-import { createContext, useContext, useState, useEffect } from 'react';
+import React, { createContext, useState, useEffect } from 'react';
+import { API_BASE_URL } from '../constants/api';
 
-const AuthContext = createContext();
-
-export const useAuth = () => {
-  const context = useContext(AuthContext);
-  if (!context) {
-    throw new Error('useAuth debe ser usado dentro de un AuthProvider');
-  }
-  return context;
-};
+export const AuthContext = createContext();
 
 export const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null);
@@ -20,7 +13,7 @@ export const AuthProvider = ({ children }) => {
     const verifyToken = async () => {
       if (token) {
         try {
-          const response = await fetch('http://localhost:3000/api/auth/verify', {
+          const response = await fetch(`${API_BASE_URL}/auth/verify`, {
             headers: {
               'Authorization': `Bearer ${token}`
             }
@@ -48,7 +41,7 @@ export const AuthProvider = ({ children }) => {
 
   const login = async (correo, contrasena) => {
     try {
-      const response = await fetch('http://localhost:3000/api/auth/login', {
+      const response = await fetch(`${API_BASE_URL}/auth/login`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'
@@ -77,7 +70,7 @@ export const AuthProvider = ({ children }) => {
 
   const register = async (nombre, correo, contrasena) => {
     try {
-      const response = await fetch('http://localhost:3000/api/auth/register', {
+      const response = await fetch(`${API_BASE_URL}/auth/register`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'
